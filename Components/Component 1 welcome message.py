@@ -7,9 +7,15 @@ from random import randint
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
              "Jamaal", "Grover", "Fredrick", "Barton")
 
-num = randint(0,9)
-name = (bot_names[num])
 
-print("***Welcome to Bubble Bar***")
-print("***My name is", name, "***")
-print("***I will be assisting you today in ordering your drinks***")
+def welcome():
+    num = randint(0,9)
+    name = (bot_names[num])
+    print("***Welcome to Bubble Bar***")
+    print("***My name is", name, "***")
+    print("***I will be assisting you today in ordering your drinks***")
+
+def main():
+    welcome()
+
+main()
