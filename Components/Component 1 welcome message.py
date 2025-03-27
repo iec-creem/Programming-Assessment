@@ -9,4 +9,7 @@ bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
 
 num = randint(0,9)
 name = (bot_names[num])
-print(name)
+
+print("***Welcome to Bubble Bar***")
+print("***My name is", name, "***")
+print("***I will be assisting you today in ordering your drinks***")
