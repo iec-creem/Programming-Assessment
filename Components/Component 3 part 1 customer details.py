@@ -1,9 +1,18 @@
 # Customer details dictionary
 customer_details = {}
 
-# Ask for user input
-customer_details["name"] = input("Please enter your name: ")
-customer_details["phone"] = input("Please enter your phone number: ")
-
+# While loop for validation of name
+while True:
+    question = "Please enter your name: "
+    response = input(question)
+    # Checking if input is alphabetical
+    x = response.isalpha()
+    if x == False:
+        # If not then print error message
+        print("Input must only contain letters")
+    else:
+        # If alpha covert to title and append to dictionary
+        customer_details["name"] = response
+        break
 
 print(customer_details)
