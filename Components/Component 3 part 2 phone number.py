@@ -7,10 +7,12 @@ customer_details = {}
 pattern = r"^\d{8,10}$"
 
 # Ask for user input
-phone_number = input("Please enter your phone number: ")
-if re.match(pattern, phone_number):
-    customer_details["phone"] = phone_number
-else:
-    print("this is an invalid phone number")
+while True:
+    phone_number = input("Please enter your phone number: ")
+    if re.match(pattern, phone_number):
+        customer_details["phone"] = phone_number
+        break
+    else:
+        print("This is an invalid phone number")
 
 print(customer_details)
