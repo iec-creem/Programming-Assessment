@@ -1,3 +1,5 @@
+import re
+
 # Customer details dictionary
 customer_details = {}
 
@@ -5,8 +7,10 @@ customer_details = {}
 while True:
     question = "Please enter your name: "
     response = input(question)
+    # Removes blank spaces from response
+    no_blanks = re.sub(r"\s+", "", response)
     # Checking if input is alphabetical
-    x = response.isalpha()
+    x = no_blanks.isalpha()
     if x == False:
         # If not then print error message
         print("Input must only contain letters")
