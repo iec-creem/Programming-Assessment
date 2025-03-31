@@ -12,7 +12,7 @@ while True:
         print("Input must only contain letters")
     else:
         # If alpha covert to title and append to dictionary
-        customer_details["name"] = response
+        customer_details["name"] = response.title()
         break
 
 print(customer_details)
