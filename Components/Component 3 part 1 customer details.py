@@ -1,16 +1,9 @@
-# Setting up variables
-name = ""
-phone = ""
+# Customer details dictionary
+customer_details = {}
 
 # Ask for user input
-print("Please enter your name: ")
-name = input()
-print("Please enter your phone number: ")
-phone = input()
-print("Please enter your address: ")
-address = input()
+customer_details["name"] = input("Please enter your name: ")
+customer_details["phone"] = input("Please enter your phone number: ")
 
-# Printing customer details
-print(name)
-print(phone)
-print(address)
+
+print(customer_details)
