@@ -3,10 +3,10 @@ import re
 # Customer details dictionary
 customer_details = {}
 
-# Regular expression pattern for phone validation
-pattern = r"^\d{8,10}$"
-
 def click_collect():
+    # Regular expression pattern for phone validation
+    pattern = r"^\d{8,10}$"
+
     # While loop for validation of name
     while True:
         question = "Please enter your name: "
@@ -26,8 +26,13 @@ def click_collect():
     # While loop for validation of phone number
     while True:
         # Asks for user input
-        phone_number = input("Please enter your phone number: ")
-        if re.match(pattern, phone_number):
+        question = ("Please enter your phone number: ")
+        response = input(question)
+        # Removes blank spaces from response
+        no_blanks = re.sub(r"\s+", "", response)
+        phone_number = response
+        if re.match(pattern, no_blanks):
+            phone_number = no_blanks
             customer_details["phone"] = phone_number
             break
         else:
