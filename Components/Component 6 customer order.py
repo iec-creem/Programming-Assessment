@@ -62,7 +62,15 @@ print(num_boba)
 print("Please choose boba from the menu")
 for item in range(num_boba):
     while num_boba > 0:
-        boba_ordered = int(input())
+        while True:
+            try:
+                boba_ordered = int(input())
+                if boba_ordered >= 1 and boba_ordered <= 24:
+                    break
+                else:
+                    print("Your pizza order must be between 1 and 24")
+            except ValueError:
+                print("That is not a valid number")
         boba_ordered = boba_ordered-1
         order_list.append(boba_names[boba_ordered])
         order_cost.append(boba_prices[boba_ordered])
