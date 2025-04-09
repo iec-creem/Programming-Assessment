@@ -54,6 +54,7 @@ print("Please choose boba from the menu")
 for item in range(num_boba):
     while num_boba > 0:
         boba_ordered = int(input())
+        boba_ordered = boba_ordered-1
         order_list.append(boba_names[boba_ordered])
         order_cost.append(boba_prices[boba_ordered])
         print(boba_names[boba_ordered], boba_prices[boba_ordered])
