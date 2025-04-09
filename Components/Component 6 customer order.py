@@ -46,7 +46,16 @@ menu()
 
 # Choose boba from the menu
 num_boba = 0
-num_boba = int(input("How many drinks do you want to order? "))
+while True:
+    try:
+        num_boba = int(input("How many drinks do you want to order? "))
+        if num_boba >= 1 and num_boba <= 20:
+            break
+        else:
+            print("Your order must be between 1 and 20")
+
+    except ValueError:
+        print("This is not a valid number")
 print(num_boba)
 
 # Choose pizzas from the menu
