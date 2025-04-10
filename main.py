@@ -23,6 +23,9 @@ HIGH = 2
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
              "Jamaal", "Grover", "Fredrick", "Barton")
 
+# Customer details dictionary
+customer_details = {}
+
 
 # Function validates integers
 # Takes parameters of low and high numbers and question
@@ -61,12 +64,50 @@ def pickup_delivery():
     print("Enter 2 for delivery")
     del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
-        print("Click and collect")
+        click_collect()
     elif del_pick == 2:
         print("Delivery")
+
+
+def click_collect():
+    # Regular expression pattern for phone validation
+    pattern = r"^\d{8,10}$"
+
+    # While loop for validation of name
+    while True:
+        question = "Please enter your name: "
+        response = input(question)
+        # Removes blank spaces from response
+        no_blanks = re.sub(r"\s+", "", response)
+        # Checking if input is alphabetical
+        x = no_blanks.isalpha()
+        if x == False:
+            # If not then print error message
+            print("Input must only contain letters")
+        else:
+            # If alpha covert to title and append to dictionary
+            customer_details["name"] = response.title()
+            break
+
+    # While loop for validation of phone number
+    while True:
+        # Asks for user input
+        question = ("Please enter your phone number: ")
+        response = input(question)
+        # Removes blank spaces from response
+        no_blanks = re.sub(r"\s+", "", response)
+        phone_number = response
+        if re.match(pattern, no_blanks):
+            phone_number = no_blanks
+            customer_details["phone"] = phone_number
+            break
+        else:
+            print("This is an invalid phone number")
 
 
 def main():
     welcome()
     pickup_delivery()
 main()
+
+print(customer_details)
