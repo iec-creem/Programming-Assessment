@@ -26,8 +26,10 @@ def continue_or_cancel():
     print("Enter 2 to cancel")
     del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
-        print("Continue")
+        print("Thank you for your order")
+        print("Your order has been sent to the kitchen")
+        print("You will receive a text when it is ready for pickup or out for delivery")
     elif del_pick == 2:
-        print("Cancel")
+        print("Your order has been canceled")
 
 continue_or_cancel()
