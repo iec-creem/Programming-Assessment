@@ -21,6 +21,9 @@ def print_order():
     for item in order_list:
         print(Style.BRIGHT + "Ordered: {} Cost ${:.2f}".format(item, order_cost[count]))
         count = count+1
+    # Calculate the total cost of the order using sum
+    total_cost = sum(order_cost)
+    print(Style.BRIGHT + "Total Cost: ${:.2f}".format(total_cost))
     print()
 
 print_order()
