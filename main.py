@@ -45,6 +45,22 @@ def integer_validation(low, high, question):
             (f"please enter {LOW} or {HIGH}: ")
 
 
+def validate_alpha(question):
+    # While loop for validation of street name
+    while True:
+        response = input(question)
+        # Removes blank spaces from response
+        no_blanks = re.sub(r"\s+", "", response)
+        # Checking if input is alphabetical
+        x = no_blanks.isalpha()
+        if x == False:
+            # If not then print error message
+            print("Input must only contain letters")
+        else:
+            # If alpha covert to title and append to dictionary
+            return response
+
+
 def welcome():
     num = randint(0,9)
     name = (bot_names[num])
@@ -66,7 +82,8 @@ def pickup_delivery():
     if del_pick == 1:
         click_collect()
     elif del_pick == 2:
-        print("Delivery")
+        click_collect()
+        delivery_info()
 
 
 def click_collect():
@@ -103,6 +120,31 @@ def click_collect():
             break
         else:
             print("This is an invalid phone number")
+
+
+def delivery_info():
+    # While loop for validation of house number
+    while True:
+        question = "Please enter your house or apartment number: "
+        response = input(question)
+        if response == "":
+            print ("Can not be left blank")
+        else:
+            # Removes blank spaces from response
+            no_blanks = re.sub(r"\s+", "", response)
+            customer_details["house"] = response.title()
+            break
+
+    question = "Please enter your street name: "
+    response = validate_alpha(question)
+    # If alpha covert to title and append to dictionary
+    customer_details["street"] = response.title()
+
+    # While loop for validation of suburb
+    question = "Please enter your suburb name: "
+    response = validate_alpha(question)
+    # If alpha covert to title and append to dictionary
+    customer_details["suburb"] = response.title()
 
 
 def main():
