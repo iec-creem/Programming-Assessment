@@ -23,6 +23,20 @@ HIGH = 2
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
              "Jamaal", "Grover", "Fredrick", "Barton")
 
+boba_names = ['Original Milk Tea', 'Strawberry Milk Tea', 'Chocolate Milk Tea', 'Coffee Milk Tea', 'Mocha Milk Tea','Taro Milk Tea', 
+                'Caramel Milk Tea', 'Matcha Milk Tea','Brown Sugar Milk Tea',  
+                'Black Tea', 'Jasmine Green Tea', 'Peach Tea', 'Passion Fruit Tea', 'Mango Tea', 
+                'Grape Slushy', 'Lemon Slushy', 'Lime Slushy', 'Strawberry Slushy', 'Mango Slushy', 'Peach Slushy', 'Passion Fruit Slushy', 
+                'Kiwifruit Slushy', 'Green Apple Slushy', 'Pineapple Slushy']
+
+boba_prices = [8.00, 8.00, 8.00, 8.00, 8.00, 8.20, 8.20, 8.60, 10.50, 7.20, 7.20, 7.90, 7.90, 7.90, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20]
+
+# List to store ordered boba
+order_list = []
+
+# List to store boba prices
+order_cost = []
+
 # Customer details dictionary
 customer_details = {}
 
@@ -175,10 +189,50 @@ def menu():
     print()
 
 
+def cust_order():
+    # Choose boba from the menu
+    num_boba = 0
+    print("There is a maximum of 20 drinks per order")
+    while True:
+        try:
+            num_boba = int(input("How many drinks do you want to order? "))
+            if num_boba >= 1 and num_boba <= 20:
+                break
+            else:
+                print("Your order must be between 1 and 20")
+
+        except ValueError:
+            print("This is not a valid number")
+    print(num_boba)
+
+    # Choose pizzas from the menu
+    print("Please choose drink(s) from the menu")
+    for item in range(num_boba):
+        while num_boba > 0:
+            while True:
+                try:
+                    boba_ordered = int(input())
+                    if boba_ordered >= 1 and boba_ordered <= 24:
+                        break
+                    else:
+                        print("Your pizza order must be between 1 and 24")
+                except ValueError:
+                    print("That is not a valid number")
+            boba_ordered = boba_ordered-1
+            order_list.append(boba_names[boba_ordered])
+            order_cost.append(boba_prices[boba_ordered])
+            print("{} ${:.2f}".format(boba_names[boba_ordered], boba_prices[boba_ordered]))
+            num_boba = num_boba-1
+
+    print(order_list)
+    print(order_cost)
+
+
 def main():
     welcome()
     pickup_delivery()
     menu()
+    cust_order()
 main()
 
 print(customer_details)
