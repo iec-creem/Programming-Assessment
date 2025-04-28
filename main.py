@@ -101,6 +101,7 @@ def pickup_delivery():
     elif del_pick == 2:
         click_collect()
         delivery_info()
+    return del_pick
 
 
 def click_collect():
@@ -227,15 +228,18 @@ def cust_order():
             print("{} ${:.2f}".format(boba_names[boba_ordered], boba_prices[boba_ordered]))
             num_boba = num_boba-1
 
-    print(order_list)
-    print(order_cost)
 
-
-def print_order():
+def print_order(del_pick):
     print()
     # Print customer order
     print(Fore.GREEN + "Customer Details")
-    print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
+    # To account for different data collected for click and collect or delivery
+    if del_pick == 1:
+        print("Click and Collect")
+        print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}")
+    else:
+        print("Delivery")
+        print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
     print()
     print(Fore.GREEN + "Order Details")
     count = 0
@@ -250,8 +254,8 @@ def print_order():
 
 def main():
     welcome()
-    pickup_delivery()
+    del_pick = pickup_delivery()
     menu()
     cust_order()
-    print_order()
+    print_order(del_pick)
 main()
