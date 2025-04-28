@@ -40,6 +40,9 @@ order_cost = []
 # Customer details dictionary
 customer_details = {}
 
+# Set autoreset to true so that coloured text automatically stops at end of print statement
+init(autoreset=True)
+
 
 # Function validates integers
 # Takes parameters of low and high numbers and question
@@ -228,11 +231,27 @@ def cust_order():
     print(order_cost)
 
 
+def print_order():
+    print()
+    # Print customer order
+    print(Fore.GREEN + "Customer Details")
+    print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
+    print()
+    print(Fore.GREEN + "Order Details")
+    count = 0
+    for item in order_list:
+        print(Style.BRIGHT + "Ordered: {} Cost ${:.2f}".format(item, order_cost[count]))
+        count = count+1
+    # Calculate the total cost of the order using sum
+    total_cost = sum(order_cost)
+    print(Style.BRIGHT + "Total Cost: ${:.2f}".format(total_cost)) # Still have to add delivery cost to the total cost (in main program)
+    print()
+
+
 def main():
     welcome()
     pickup_delivery()
     menu()
     cust_order()
+    print_order()
 main()
-
-print(customer_details)
