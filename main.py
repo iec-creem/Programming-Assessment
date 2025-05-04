@@ -95,6 +95,7 @@ def pickup_delivery():
     question = (f"please enter {LOW} or {HIGH}: ")
     print("Enter 1 for click and collect")
     print("Enter 2 for delivery")
+    print("There is a $14 delivery fee if you choose delivery and the cost of your order is under $50")
     del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
         click_collect()
@@ -189,7 +190,8 @@ def menu():
     df.index = blankIndex
 
     print()
-    print("Pizza Menu: Please order using the menu items number \n\n" ,df)
+    print("Boba Menu: Please order using the menu items number")
+    print("Reminder: There is a $14 delivery fee if you chose delivery previously and the cost of your order is under $50 \n\n" ,df)
     print()
 
 
@@ -248,7 +250,13 @@ def print_order(del_pick):
         count = count+1
     # Calculate the total cost of the order using sum
     total_cost = sum(order_cost)
-    print(Style.BRIGHT + "Total Cost: ${:.2f}".format(total_cost)) # Still have to add delivery cost to the total cost (in main program)
+    if total_cost < 50 and del_pick == 2:
+        total_cost = total_cost + 14
+        print(Style.BRIGHT + '$14 delivery charge as cost of order is under $50')
+    elif total_cost > 50 and del_pick == 2:
+        print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
+    print()
+    print(Style.BRIGHT + "Total Cost: ${:.2f}".format(total_cost))
     print()
 
 
