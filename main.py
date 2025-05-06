@@ -275,6 +275,7 @@ def continue_or_cancel():
         print("Your order has been canceled")
 
 
+# Exit program or start a new order 
 def new_or_exit():
     del_pick = ""
     print("Do you want start a new order or exit program")
@@ -284,8 +285,10 @@ def new_or_exit():
     del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
         print("New Order")
+        main()
     elif del_pick == 2:
-        print("Exit")
+        print("Thank you for using pizza BOT")
+        exit()
 
 
 def main():
