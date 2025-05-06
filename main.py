@@ -221,7 +221,7 @@ def cust_order():
                     if boba_ordered >= 1 and boba_ordered <= 24:
                         break
                     else:
-                        print("Your pizza order must be between 1 and 24")
+                        print("Your drink order must be between 1 and 24")
                 except ValueError:
                     print("That is not a valid number")
             boba_ordered = boba_ordered-1
@@ -275,6 +275,19 @@ def continue_or_cancel():
         print("Your order has been canceled")
 
 
+def new_or_exit():
+    del_pick = ""
+    print("Do you want start a new order or exit program")
+    question = (f"please enter {LOW} or {HIGH}: ")
+    print("Enter 1 for new order")
+    print("Enter 2 to exit")
+    del_pick = integer_validation(LOW, HIGH, question)
+    if del_pick == 1:
+        print("New Order")
+    elif del_pick == 2:
+        print("Exit")
+
+
 def main():
     welcome()
     del_pick = pickup_delivery()
@@ -282,4 +295,5 @@ def main():
     cust_order()
     print_order(del_pick)
     continue_or_cancel()
+    new_or_exit()
 main()
