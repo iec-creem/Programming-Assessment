@@ -260,10 +260,26 @@ def print_order(del_pick):
     print()
 
 
+def continue_or_cancel():
+    del_pick = ""
+    print("Do you want continue with the order?")
+    question = (f"please enter {LOW} or {HIGH}: ")
+    print("Enter 1 to continue")
+    print("Enter 2 to cancel")
+    del_pick = integer_validation(LOW, HIGH, question)
+    if del_pick == 1:
+        print("Thank you for your order")
+        print("Your order has been sent to the kitchen")
+        print("You will receive a text when it is ready for pickup or out for delivery")
+    elif del_pick == 2:
+        print("Your order has been canceled")
+
+
 def main():
     welcome()
     del_pick = pickup_delivery()
     menu()
     cust_order()
     print_order(del_pick)
+    continue_or_cancel()
 main()
