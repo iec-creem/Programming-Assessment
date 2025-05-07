@@ -285,9 +285,17 @@ def new_or_exit():
     del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
         print("New Order")
+        # Clear data from lists 
+        order_list.clear()
+        order_cost.clear()
+        # Run main function
         main()
     elif del_pick == 2:
         print("Thank you for using pizza BOT")
+        # Clear data from lists 
+        order_list.clear()
+        order_cost.clear()
+        # Exit program
         exit()
 
 
