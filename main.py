@@ -10,6 +10,8 @@ import re
 import pandas as pd
 # Import sys so that program can use exit()
 import sys
+import time
+import os
 # Import random integer
 from random import randint
 # Import colorama to create coloured text
