@@ -81,8 +81,7 @@ def validate_alpha(question):
 
 
 def welcome():
-    num = randint(0,9)
-    name = (bot_names[num])
+    name = (random.choice(bot_names))
     print("***Welcome to Bubble Bar***")
     print("***My name is", name, "***")
     print("***I will be assisting you today in ordering your drinks***")
