@@ -8,19 +8,16 @@ import random
 import re
 # Import pandas library 
 import pandas as pd
-# Import sys so that program can use exit()
-import sys
 import time
 import os
-# Import random integer
-from random import randint
 # Import colorama to create coloured text
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style, init
 
-# Constant variables for low and high number for menus 
-LOW = 1
-HIGH = 2
+# Variables for low and high number for menus (not constant so that they can be changed if needed for function)
+low = 1
+high = 2
 
+DELV_COST = 14
 #list of names used by BOT
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
              "Jamaal", "Grover", "Fredrick", "Barton")
@@ -58,18 +55,16 @@ def integer_validation(low, high, question):
             if num >= low and num <= high:
                 return num
             else:
-                (f"please enter {LOW} or {HIGH}: ")
+                print(f"Input must be between {low} and {high}")
         except ValueError:
             print("That is not a valid number")
-            (f"please enter {LOW} or {HIGH}: ")
 
 
 def validate_alpha(question):
-    # While loop for validation of street name
+    # While loop for validation of alphabetical
     while True:
         response = input(question)
-        # Removes blank spaces from response
-        no_blanks = re.sub(r"\s+", "", response)
+        no_blanks = blank_remover(response)
         # Checking if input is alphabetical
         x = no_blanks.isalpha()
         if x == False:
@@ -78,6 +73,12 @@ def validate_alpha(question):
         else:
             # If alpha covert to title and append to dictionary
             return response
+
+
+def blank_remover(response):
+    # Removes blank spaces from response
+    no_blanks = re.sub(r"\s+", "", response)
+    return no_blanks
 
 
 def welcome():
@@ -93,11 +94,11 @@ def welcome():
 def pickup_delivery():
     del_pick = ""
     print("Do you want click and collect or delivery?")
-    question = (f"please enter {LOW} or {HIGH}: ")
+    question = (f"please enter {low} or {high}: ")
     print("Enter 1 for click and collect")
     print("Enter 2 for delivery")
     print("There is a $14 delivery fee if you choose delivery and the cost of your order is under $50")
-    del_pick = integer_validation(LOW, HIGH, question)
+    del_pick = integer_validation(low, high, question)
     if del_pick == 1:
         click_collect()
     elif del_pick == 2:
@@ -110,21 +111,9 @@ def click_collect():
     # Regular expression pattern for phone validation
     pattern = r"^\d{8,10}$"
 
-    # While loop for validation of name
-    while True:
-        question = "Please enter your name: "
-        response = input(question)
-        # Removes blank spaces from response
-        no_blanks = re.sub(r"\s+", "", response)
-        # Checking if input is alphabetical
-        x = no_blanks.isalpha()
-        if x == False:
-            # If not then print error message
-            print("Input must only contain letters")
-        else:
-            # If alpha covert to title and append to dictionary
-            customer_details["name"] = response.title()
-            break
+    question = "Please enter your name: "
+    response = validate_alpha(question)
+    customer_details["name"] = response.title()
 
     # While loop for validation of phone number
     while True:
@@ -132,7 +121,7 @@ def click_collect():
         question = ("Please enter your phone number: ")
         response = input(question)
         # Removes blank spaces from response
-        no_blanks = re.sub(r"\s+", "", response)
+        no_blanks = blank_remover(response)
         phone_number = response
         if re.match(pattern, no_blanks):
             phone_number = no_blanks
@@ -143,17 +132,17 @@ def click_collect():
 
 
 def delivery_info():
+    pattern = r'^\d.*[a-zA-Z0-9]*$'
     # While loop for validation of house number
     while True:
         question = "Please enter your house or apartment number: "
         response = input(question)
-        if response == "":
-            print ("Can not be left blank")
-        else:
-            # Removes blank spaces from response
-            no_blanks = re.sub(r"\s+", "", response)
+        no_blanks = blank_remover(response)
+        if re.match(pattern, no_blanks):
             customer_details["house"] = response.title()
             break
+        else:
+            print("This is an invalid house number")
 
     question = "Please enter your street name: "
     response = validate_alpha(question)
@@ -171,10 +160,10 @@ def menu():
     # Create menu dictionary
     menu_dict = {}
 
-    # Format pizza prices as currency
+    # Format drink prices as currency
     pd.options.display.float_format = '${:,.2f}'.format
 
-    # Add pizza numbers to dictionary
+    # Add drink numbers to dictionary
     menu_dict ['Number'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 
     menu_dict ['Boba Names'] = ['Original Milk Tea', 'Strawberry Milk Tea', 'Chocolate Milk Tea', 'Coffee Milk Tea', 'Mocha Milk Tea','Taro Milk Tea', 
@@ -197,34 +186,19 @@ def menu():
 
 
 def cust_order():
-    # Choose boba from the menu
-    num_boba = 0
+    high = 20
     print("There is a maximum of 20 drinks per order")
-    while True:
-        try:
-            num_boba = int(input("How many drinks do you want to order? "))
-            if num_boba >= 1 and num_boba <= 20:
-                break
-            else:
-                print("Your order must be between 1 and 20")
+    question = "How many drinks do you want to order? "
+    num_boba = integer_validation(low, high, question)
+    print()
 
-        except ValueError:
-            print("This is not a valid number")
-    print(num_boba)
-
-    # Choose pizzas from the menu
+    # Choose drinks from the menu
+    high = 24
     print("Please choose drink(s) from the menu")
     for item in range(num_boba):
         while num_boba > 0:
-            while True:
-                try:
-                    boba_ordered = int(input())
-                    if boba_ordered >= 1 and boba_ordered <= 24:
-                        break
-                    else:
-                        print("Your drink order must be between 1 and 24")
-                except ValueError:
-                    print("That is not a valid number")
+            question = ""
+            boba_ordered = integer_validation(low, high, question)
             boba_ordered = boba_ordered-1
             order_list.append(boba_names[boba_ordered])
             order_cost.append(boba_prices[boba_ordered])
@@ -252,7 +226,7 @@ def print_order(del_pick):
     # Calculate the total cost of the order using sum
     total_cost = sum(order_cost)
     if total_cost < 50 and del_pick == 2:
-        total_cost = total_cost + 14
+        total_cost = total_cost + DELV_COST
         print(Style.BRIGHT + '$14 delivery charge as cost of order is under $50')
     elif total_cost > 50 and del_pick == 2:
         print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
@@ -262,28 +236,30 @@ def print_order(del_pick):
 
 
 def continue_or_cancel():
+    high = 2
     del_pick = ""
     print("Do you want continue with the order?")
-    question = (f"please enter {LOW} or {HIGH}: ")
+    question = (f"please enter {low} or {high}: ")
     print("Enter 1 to continue")
     print("Enter 2 to cancel")
-    del_pick = integer_validation(LOW, HIGH, question)
+    del_pick = integer_validation(low, high, question)
     if del_pick == 1:
         print("Thank you for your order")
         print("Your order has been sent to the kitchen")
         print("You will receive a text when it is ready for pickup or out for delivery")
     elif del_pick == 2:
         print("Your order has been canceled")
+    print()
 
 
 # Exit program or start a new order 
 def new_or_exit():
     del_pick = ""
     print("Do you want start a new order or exit program")
-    question = (f"please enter {LOW} or {HIGH}: ")
+    question = (f"please enter {low} or {high}: ")
     print("Enter 1 for new order")
     print("Enter 2 to exit")
-    del_pick = integer_validation(LOW, HIGH, question)
+    del_pick = integer_validation(low, high, question)
     if del_pick == 1:
         print("New Order")
         # Clear data from lists 
