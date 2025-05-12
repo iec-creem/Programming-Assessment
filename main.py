@@ -202,7 +202,7 @@ def cust_order():
             boba_ordered = boba_ordered-1
             order_list.append(boba_names[boba_ordered])
             order_cost.append(boba_prices[boba_ordered])
-            print("{} ${:.2f}".format(boba_names[boba_ordered], boba_prices[boba_ordered]))
+            print(f"{boba_names[boba_ordered]} ${boba_prices[boba_ordered]:.2f}")
             num_boba = num_boba-1
 
 
@@ -221,7 +221,7 @@ def print_order(del_pick):
     print(Fore.GREEN + "Order Details")
     count = 0
     for item in order_list:
-        print(Style.BRIGHT + "Ordered: {} Cost ${:.2f}".format(item, order_cost[count]))
+        print(Style.BRIGHT + f"Ordered: {item} -- Cost: ${order_cost[count]:.2f}")
         count = count+1
     # Calculate the total cost of the order using sum
     total_cost = sum(order_cost)
@@ -231,7 +231,7 @@ def print_order(del_pick):
     elif total_cost > 50 and del_pick == 2:
         print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
     print()
-    print(Style.BRIGHT + "Total Cost: ${:.2f}".format(total_cost))
+    print(Style.BRIGHT + f"Total Cost: ${total_cost:.2f}")
     print()
 
 
