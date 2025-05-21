@@ -13,7 +13,7 @@ import pandas as pd
 # Import colorama to create coloured text
 from colorama import Fore, Style, init
 
-# Variables for low and high number for menus (not constant so that they can be changed if needed for function)
+# Constants for low and high number for menus
 LOW = 1
 HIGH = 2
 
@@ -116,6 +116,7 @@ def welcome():
     print("***Welcome to Bubble Bar***")
     print("***My name is", name, "***")
     print("***I will be assisting you today in ordering your drinks***")
+    print()
 
 
 # Function allowing users to choose either click and collect or delivery
@@ -129,6 +130,8 @@ def pickup_delivery():
     print("Enter 2 for delivery")
     print("There is a $14 delivery fee if you choose delivery and the cost of your order is under $50")
     del_pick = integer_validation(LOW, HIGH, question)
+    time.sleep(2)
+    print()
     if del_pick == 1:
         click_collect()
     elif del_pick == 2:
@@ -216,7 +219,7 @@ def menu(del_pick):
         # Loop order while ordering
         while True:
             response = input(
-                "\nEnter the number of the item you want to order (or 0 to finish ordering)\n")
+                "Enter the number of the item you want to order (or 0 to finish ordering)\n")
 
             if not response.isdigit():
                 print("Please enter a valid number")
@@ -230,11 +233,12 @@ def menu(del_pick):
             if response in menu_df["Number"].values:
                 item = menu_df.loc[menu_df["Number"] == response].iloc[0]
                 order.append(item)
-                print(f"Added {item['Drink']} to your order!")
+                print(Style.BRIGHT + f"Added {item['Drink']} to your order!")
 
             else:
                 print("Invalid choice, please try again.")
 
+        time.sleep(2)
         print()
         if order:
             # Print customer order
@@ -301,11 +305,12 @@ def new_or_exit():
         # Clear data from lists
         order_list.clear()
         order_cost.clear()
+        time.sleep(2)
         os.system('cls')
         # Run main function
         main()
     elif del_pick == 2:
-        print("Thank you for using pizza BOT")
+        print("Thank you for using boba BOT")
         # Clear data from lists
         order_list.clear()
         order_cost.clear()
