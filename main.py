@@ -6,19 +6,19 @@
 # Import libraries
 import random
 import re
-# Import pandas library 
-import pandas as pd
+# Import pandas library
 import time
 import os
+import pandas as pd
 # Import colorama to create coloured text
 from colorama import Fore, Style, init
 
 # Variables for low and high number for menus (not constant so that they can be changed if needed for function)
-low = 1
-high = 2
+LOW = 1
+HIGH = 2
 
 DELV_COST = 14
-#list of names used by BOT
+# list of names used by BOT
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
              "Jamaal", "Grover", "Fredrick", "Barton")
 
@@ -39,7 +39,7 @@ menu_data = [
     {"Category": "Milk Tea", "Drink": "Caramel Milk Tea", "Price": 8.20},
     {"Category": "Milk Tea", "Drink": "Matcha Milk Tea", "Price": 8.60},
     {"Category": "Milk Tea", "Drink": "Brown Sugar Milk Tea", "Price": 10.50},
-    
+
     # Tea
     {"Category": "Tea", "Drink": "Black Tea", "Price": 7.20},
     {"Category": "Tea", "Drink": "Jasmine Green Tea", "Price": 7.20},
@@ -75,10 +75,10 @@ init(autoreset=True)
 
 # Function validates integers
 # Takes parameters of low and high numbers and question
-# Input must be integer between low and high parameters 
+# Input must be integer between low and high parameters
 # While loop until correct input is received then returns input to original function
-# Value error results in error message and new input request 
-def integer_validation(low, high, question): 
+# Value error results in error message and new input request
+def integer_validation(low, high, question):
     while True:
         try:
             num = int(input(question))
@@ -97,7 +97,7 @@ def validate_alpha(question):
         no_blanks = blank_remover(response)
         # Checking if input is alphabetical
         x = no_blanks.isalpha()
-        if x == False:
+        if x is False:
             # If not then print error message
             print("Input must only contain letters")
         else:
@@ -124,11 +124,11 @@ def welcome():
 def pickup_delivery():
     del_pick = ""
     print("Do you want click and collect or delivery?")
-    question = (f"please enter {low} or {high}: ")
+    question = (f"please enter {LOW} or {HIGH}: ")
     print("Enter 1 for click and collect")
     print("Enter 2 for delivery")
     print("There is a $14 delivery fee if you choose delivery and the cost of your order is under $50")
-    del_pick = integer_validation(low, high, question)
+    del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
         click_collect()
     elif del_pick == 2:
@@ -205,7 +205,8 @@ def menu(del_pick):
         print(f"\n{color}=== {category} ==={Style.RESET_ALL}")
         for _, row in group.iterrows():
             # {:2d} -> number (2 digits), {:25s} -> item name (25 characters wide, left-aligned), {:>6} -> price (right-aligned 6 spaces)
-            print(f"{row['Number']:2d}. {row['Drink']: <22} ${row['Price']:>6.2f}")
+            print(
+                f"{row['Number']:2d}. {row['Drink']: <22} ${row['Price']:>6.2f}")
     print()
 
     def cust_order():
@@ -214,8 +215,9 @@ def menu(del_pick):
 
         # Loop order while ordering
         while True:
-            response = input("\nEnter the number of the item you want to order (or 0 to finish ordering)\n")
-            
+            response = input(
+                "\nEnter the number of the item you want to order (or 0 to finish ordering)\n")
+
             if not response.isdigit():
                 print("Please enter a valid number")
                 continue
@@ -223,13 +225,13 @@ def menu(del_pick):
             response = int(response)
 
             if response == 0:
-                break 
-            
+                break
+
             if response in menu_df["Number"].values:
                 item = menu_df.loc[menu_df["Number"] == response].iloc[0]
                 order.append(item)
                 print(f"Added {item['Drink']} to your order!")
-                
+
             else:
                 print("Invalid choice, please try again.")
 
@@ -240,19 +242,23 @@ def menu(del_pick):
             # To account for different data collected for click and collect or delivery
             if del_pick == 1:
                 print("Click and Collect")
-                print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}")
+                print(
+                    f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}")
             else:
                 print("Delivery")
-                print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
+                print(
+                    f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
             print()
             print(Fore.GREEN + "Order Details")
             total = 0
             for idx, item in enumerate(order, 1):
-                print(Style.BRIGHT + f"{idx}. {item['Drink']} - ${item['Price']:.2f}")
+                print(Style.BRIGHT +
+                      f"{idx}. {item['Drink']} - ${item['Price']:.2f}")
                 total += item['Price']
             if total < 50 and del_pick == 2:
                 total = total + DELV_COST
-                print(Style.BRIGHT + '$14 delivery charge as cost of order is under $50')
+                print(Style.BRIGHT +
+                      '$14 delivery charge as cost of order is under $50')
             elif total > 50 and del_pick == 2:
                 print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
             print()
@@ -265,14 +271,14 @@ def menu(del_pick):
             cust_order()  # If customer does not order anything, the cust order function is called again so that they can order items
     cust_order()
 
+
 def continue_or_cancel():
-    high = 2
     del_pick = ""
     print("Do you want continue with the order?")
-    question = (f"please enter {low} or {high}: ")
+    question = (f"please enter {LOW} or {HIGH}: ")
     print("Enter 1 to continue")
     print("Enter 2 to cancel")
-    del_pick = integer_validation(low, high, question)
+    del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
         print("Thank you for your order")
         print("Your order has been sent to the kitchen")
@@ -282,24 +288,25 @@ def continue_or_cancel():
     print()
 
 
-# Exit program or start a new order 
+# Exit program or start a new order
 def new_or_exit():
     del_pick = ""
     print("Do you want start a new order or exit program")
-    question = (f"please enter {low} or {high}: ")
+    question = (f"please enter {LOW} or {HIGH}: ")
     print("Enter 1 for new order")
     print("Enter 2 to exit")
-    del_pick = integer_validation(low, high, question)
+    del_pick = integer_validation(LOW, HIGH, question)
     if del_pick == 1:
         print("New Order")
-        # Clear data from lists 
+        # Clear data from lists
         order_list.clear()
         order_cost.clear()
+        os.system('cls')
         # Run main function
         main()
     elif del_pick == 2:
         print("Thank you for using pizza BOT")
-        # Clear data from lists 
+        # Clear data from lists
         order_list.clear()
         order_cost.clear()
         # Exit program
@@ -308,8 +315,14 @@ def new_or_exit():
 
 def main():
     welcome()
+    time.sleep(2)
     del_pick = pickup_delivery()
+    time.sleep(2)
     menu(del_pick)
+    time.sleep(2)
     continue_or_cancel()
+    time.sleep(2)
     new_or_exit()
+
+
 main()
