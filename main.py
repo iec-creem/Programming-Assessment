@@ -22,13 +22,43 @@ DELV_COST = 14
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
              "Jamaal", "Grover", "Fredrick", "Barton")
 
-boba_names = ['Original Milk Tea', 'Strawberry Milk Tea', 'Chocolate Milk Tea', 'Coffee Milk Tea', 'Mocha Milk Tea','Taro Milk Tea', 
-                'Caramel Milk Tea', 'Matcha Milk Tea','Brown Sugar Milk Tea',  
-                'Black Tea', 'Jasmine Green Tea', 'Peach Tea', 'Passion Fruit Tea', 'Mango Tea', 
-                'Grape Slushy', 'Lemon Slushy', 'Lime Slushy', 'Strawberry Slushy', 'Mango Slushy', 'Peach Slushy', 'Passion Fruit Slushy', 
-                'Kiwifruit Slushy', 'Green Apple Slushy', 'Pineapple Slushy']
+category_colors = {
+    "Milk Tea": Fore.BLUE,
+    "Tea": Fore.GREEN,
+    "Slushy": Fore.YELLOW,
+}
 
-boba_prices = [8.00, 8.00, 8.00, 8.00, 8.00, 8.20, 8.20, 8.60, 10.50, 7.20, 7.20, 7.90, 7.90, 7.90, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20]
+menu_data = [
+    # Milk Tea
+    {"Category": "Milk Tea", "Drink": "Original Milk Tea", "Price": 8.00},
+    {"Category": "Milk Tea", "Drink": "Strawberry Milk Tea", "Price": 8.00},
+    {"Category": "Milk Tea", "Drink": "Chocolate Milk Tea", "Price": 8.00},
+    {"Category": "Milk Tea", "Drink": "Coffee Milk Tea", "Price": 8.00},
+    {"Category": "Milk Tea", "Drink": "Mocha Milk Tea", "Price": 8.00},
+    {"Category": "Milk Tea", "Drink": "Taro Milk Tea", "Price": 8.20},
+    {"Category": "Milk Tea", "Drink": "Caramel Milk Tea", "Price": 8.20},
+    {"Category": "Milk Tea", "Drink": "Matcha Milk Tea", "Price": 8.60},
+    {"Category": "Milk Tea", "Drink": "Brown Sugar Milk Tea", "Price": 10.50},
+    
+    # Tea
+    {"Category": "Tea", "Drink": "Black Tea", "Price": 7.20},
+    {"Category": "Tea", "Drink": "Jasmine Green Tea", "Price": 7.20},
+    {"Category": "Tea", "Drink": "Peach Tea", "Price": 7.90},
+    {"Category": "Tea", "Drink": "Passion Fruit Tea", "Price": 7.90},
+    {"Category": "Tea", "Drink": "Mango Tea", "Price": 7.90},
+
+    # Slushy
+    {"Category": "Slushy", "Drink": "Grape Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Lemon Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Lime Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Strawberry Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Mango Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Peach Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Passion Fruit Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Kiwifruit Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Green Apple Slushy", "Price": 9.20},
+    {"Category": "Slushy", "Drink": "Pineapple Slushy", "Price": 9.20},
+]
 
 # List to store ordered boba
 order_list = []
@@ -156,84 +186,84 @@ def delivery_info():
     customer_details["suburb"] = response.title()
 
 
-def menu():
-    # Create menu dictionary
-    menu_dict = {}
+def menu(del_pick):
+    # Drink list display function
+    # Create DataFrame
+    menu_df = pd.DataFrame(menu_data)
 
-    # Format drink prices as currency
-    pd.options.display.float_format = '${:,.2f}'.format
+    # Sort by category
+    menu_df = menu_df.sort_values(by="Category")
 
-    # Add drink numbers to dictionary
-    menu_dict ['Number'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+    # Reset index and reassign numbering
+    menu_df = menu_df.reset_index(drop=True)
+    menu_df.insert(0, "Number", range(1, len(menu_df) + 1))
 
-    menu_dict ['Boba Names'] = ['Original Milk Tea', 'Strawberry Milk Tea', 'Chocolate Milk Tea', 'Coffee Milk Tea', 'Mocha Milk Tea','Taro Milk Tea', 
-                'Caramel Milk Tea', 'Matcha Milk Tea','Brown Sugar Milk Tea',  
-                'Black Tea', 'Jasmine Green Tea', 'Peach Tea', 'Passion Fruit Tea', 'Mango Tea', 
-                'Grape Slushy', 'Lemon Slushy', 'Lime Slushy', 'Strawberry Slushy', 'Mango Slushy', 'Peach Slushy', 'Passion Fruit Slushy', 
-                'Kiwifruit Slushy', 'Green Apple Slushy', 'Pineapple Slushy']
-
-    menu_dict ['Boba Prices'] = [8.00, 8.00, 8.00, 8.00, 8.00, 8.20, 8.20, 8.60, 10.50, 7.20, 7.20, 7.90, 7.90, 7.90, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20, 9.20]
-
-    # Display menu dataframe
-    df =pd.DataFrame(menu_dict)
-    blankIndex = [''] * len(df)
-    df.index = blankIndex
-
-    print()
-    print("Boba Menu: Please order using the menu items number")
-    print("Reminder: There is a $14 delivery fee if you chose delivery previously and the cost of your order is under $50 \n\n" ,df)
+    # Alignment and printing
+    for category, group in menu_df.groupby("Category"):
+        # Default color to white
+        color = category_colors.get(category, Fore.WHITE)
+        print(f"\n{color}=== {category} ==={Style.RESET_ALL}")
+        for _, row in group.iterrows():
+            # {:2d} -> number (2 digits), {:25s} -> item name (25 characters wide, left-aligned), {:>6} -> price (right-aligned 6 spaces)
+            print(f"{row['Number']:2d}. {row['Drink']: <22} ${row['Price']:>6.2f}")
     print()
 
+    def cust_order():
+        # Start Order
+        order = []
 
-def cust_order():
-    high = 20
-    print("There is a maximum of 20 drinks per order")
-    question = "How many drinks do you want to order? "
-    num_boba = integer_validation(low, high, question)
-    print()
+        # Loop order while ordering
+        while True:
+            response = input("\nEnter the number of the item you want to order (or 0 to finish ordering)\n")
+            
+            if not response.isdigit():
+                print("Please enter a valid number")
+                continue
 
-    # Choose drinks from the menu
-    high = 24
-    print("Please choose drink(s) from the menu")
-    for item in range(num_boba):
-        while num_boba > 0:
-            question = ""
-            boba_ordered = integer_validation(low, high, question)
-            boba_ordered = boba_ordered-1
-            order_list.append(boba_names[boba_ordered])
-            order_cost.append(boba_prices[boba_ordered])
-            print(f"{boba_names[boba_ordered]} ${boba_prices[boba_ordered]:.2f}")
-            num_boba = num_boba-1
+            response = int(response)
 
+            if response == 0:
+                break 
+            
+            if response in menu_df["Number"].values:
+                item = menu_df.loc[menu_df["Number"] == response].iloc[0]
+                order.append(item)
+                print(f"Added {item['Drink']} to your order!")
+                
+            else:
+                print("Invalid choice, please try again.")
 
-def print_order(del_pick):
-    print()
-    # Print customer order
-    print(Fore.GREEN + "Customer Details")
-    # To account for different data collected for click and collect or delivery
-    if del_pick == 1:
-        print("Click and Collect")
-        print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}")
-    else:
-        print("Delivery")
-        print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
-    print()
-    print(Fore.GREEN + "Order Details")
-    count = 0
-    for item in order_list:
-        print(Style.BRIGHT + f"Ordered: {item} -- Cost: ${order_cost[count]:.2f}")
-        count = count+1
-    # Calculate the total cost of the order using sum
-    total_cost = sum(order_cost)
-    if total_cost < 50 and del_pick == 2:
-        total_cost = total_cost + DELV_COST
-        print(Style.BRIGHT + '$14 delivery charge as cost of order is under $50')
-    elif total_cost > 50 and del_pick == 2:
-        print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
-    print()
-    print(Style.BRIGHT + f"Total Cost: ${total_cost:.2f}")
-    print()
+        print()
+        if order:
+            # Print customer order
+            print(Fore.GREEN + "Customer Details")
+            # To account for different data collected for click and collect or delivery
+            if del_pick == 1:
+                print("Click and Collect")
+                print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}")
+            else:
+                print("Delivery")
+                print(f"Customer Name: {customer_details['name']}\nCustomer Phone: {customer_details['phone']}\nCustomer Address: {customer_details['house']} {customer_details['street']} {customer_details['suburb']}")
+            print()
+            print(Fore.GREEN + "Order Details")
+            total = 0
+            for idx, item in enumerate(order, 1):
+                print(Style.BRIGHT + f"{idx}. {item['Drink']} - ${item['Price']:.2f}")
+                total += item['Price']
+            if total < 50 and del_pick == 2:
+                total = total + DELV_COST
+                print(Style.BRIGHT + '$14 delivery charge as cost of order is under $50')
+            elif total > 50 and del_pick == 2:
+                print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
+            print()
+            print(Style.BRIGHT + f"Total Cost: ${total:.2f}")
+            print()
 
+        else:
+            print("You didn't order anything...")
+            print("Please choose something from the menu to order")
+            cust_order()  # If customer does not order anything, the cust order function is called again so that they can order items
+    cust_order()
 
 def continue_or_cancel():
     high = 2
@@ -279,9 +309,7 @@ def new_or_exit():
 def main():
     welcome()
     del_pick = pickup_delivery()
-    menu()
-    cust_order()
-    print_order(del_pick)
+    menu(del_pick)
     continue_or_cancel()
     new_or_exit()
 main()
