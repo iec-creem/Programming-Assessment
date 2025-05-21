@@ -116,7 +116,6 @@ def welcome():
     print("***Welcome to Bubble Bar***")
     print("***My name is", name, "***")
     print("***I will be assisting you today in ordering your drinks***")
-    print()
 
 
 # Function allowing users to choose either click and collect or delivery
@@ -210,7 +209,6 @@ def menu(del_pick):
             # {:2d} -> number (2 digits), {:25s} -> item name (25 characters wide, left-aligned), {:>6} -> price (right-aligned 6 spaces)
             print(
                 f"{row['Number']:2d}. {row['Drink']: <22} ${row['Price']:>6.2f}")
-    print()
 
     def cust_order():
         # Start Order
@@ -219,7 +217,7 @@ def menu(del_pick):
         # Loop order while ordering
         while True:
             response = input(
-                "Enter the number of the item you want to order (or 0 to finish ordering)\n")
+                "\nEnter the number of the item you want to order (or 0 to finish ordering)\n")
 
             if not response.isdigit():
                 print("Please enter a valid number")
@@ -267,7 +265,6 @@ def menu(del_pick):
                 print(Style.BRIGHT + 'No delivery charge as cost of order is over $50')
             print()
             print(Style.BRIGHT + f"Total Cost: ${total:.2f}")
-            print()
 
         else:
             print("You didn't order anything...")
@@ -283,13 +280,14 @@ def continue_or_cancel():
     print("Enter 1 to continue")
     print("Enter 2 to cancel")
     del_pick = integer_validation(LOW, HIGH, question)
+    time.sleep(1)
+    print()
     if del_pick == 1:
         print("Thank you for your order")
         print("Your order has been sent to the kitchen")
         print("You will receive a text when it is ready for pickup or out for delivery")
     elif del_pick == 2:
         print("Your order has been canceled")
-    print()
 
 
 # Exit program or start a new order
@@ -321,12 +319,15 @@ def new_or_exit():
 def main():
     welcome()
     time.sleep(2)
+    print()
     del_pick = pickup_delivery()
     time.sleep(2)
     menu(del_pick)
     time.sleep(2)
+    print()
     continue_or_cancel()
     time.sleep(2)
+    print()
     new_or_exit()
 
 
