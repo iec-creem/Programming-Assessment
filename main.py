@@ -22,7 +22,7 @@ DELV_COST = 14
 
 # list of names used by BOT
 bot_names = ("Madge", "Abigail", "Aaron", "Eli", "Wiley", "Marie",
-             "Jamaal", "Grover", "Fredrick", "Barton")
+             "Jamaal", "Grover", "Fredrick", "Barton", "Mantre")
 
 # Colours for the different categories of drinks on the menu
 category_colors = {
