@@ -149,9 +149,11 @@ def pickup_delivery():
 
     if del_pick == 1:  # If user selects click and collect
         click_collect()  # Calls click and collect function
+
     elif del_pick == 2:  # If user selects delivery
         click_collect()  # Calls click and collect function
         delivery_info()  # Then calls delivery info function
+
     return del_pick  # Returns the user's delivery/pickup choice
 
 
@@ -177,9 +179,8 @@ def click_collect():
             # Stores response in dictionary
             customer_details["phone"] = response
             break  # Exits loop
-        else:
-            # Prints error message for invalid input
-            print("This is an invalid phone number")
+        # Prints error message for invalid input
+        print("This is an invalid phone number")
 
 
 # Function collects and validates delivery address details
@@ -197,9 +198,8 @@ def delivery_info():
             # Stores response in dictionary in title class
             customer_details["house"] = response.title()
             break  # Exits loop
-        else:
-            # Prints error message for invalid input
-            print("This is an invalid house number")
+        # Prints error message for invalid input
+        print("This is an invalid house number")
 
     question = "Please enter your street name: "  # Question for street name input
     # Sends input to alpha validator function
