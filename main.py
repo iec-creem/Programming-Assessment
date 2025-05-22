@@ -231,10 +231,12 @@ def menu(del_pick):
         # Prints category heading
         print(f"\n{color}=== {category} ==={Style.RESET_ALL}")
         for _, row in group.iterrows():  # Loops through each row in the group
-            # {:2d} -> number (2 digits), {:25s} -> item name (25 characters wide, left-aligned), {:>6} -> price (right-aligned 6 spaces)
-            # Prints menu item details
+            # {:2d} -> format as an integer and use 2 spaces
+            # {:<22} -> format as left aligned in a 22 character wide space
+            # {:>6} -> format as right aligned using 6 spaces and display 2 decimal places as a float
+            # Prints formatted menu item details
             print(
-                f"{row['Number']:2d}. {row['Drink']: <22} ${row['Price']:>6.2f}")
+                f"{row['Number']:2d}. {row['Drink']:<22} ${row['Price']:>6.2f}")
 
     # Function to process customer orders
     def cust_order():
