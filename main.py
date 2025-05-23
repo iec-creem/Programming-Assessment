@@ -186,7 +186,7 @@ def click_collect():
 # Function collects and validates delivery address details
 def delivery_info():
     # Pattern checks if input starts with a digit (valid house/apartment number)
-    pattern = r'^\d.*[a-zA-Z0-9]*$'
+    pattern = r'^\d+[a-zA-Z0-9]*$'
 
     while True:  # Sets up while loop for house number validation
         # Question for house/apartment number input
@@ -194,7 +194,9 @@ def delivery_info():
         response = input(question)  # Asks for input (string)
         # Sends input to blank remover function
         no_blanks = blank_remover(response)
-        if re.match(pattern, no_blanks):  # Checks if input matches pattern
+
+        # Checks if input matches pattern and is not only 0's
+        if re.match(pattern, no_blanks) and not re.fullmatch(r'0+', no_blanks):
             # Stores response in dictionary in title class
             customer_details["house"] = response.title()
             break  # Exits loop
