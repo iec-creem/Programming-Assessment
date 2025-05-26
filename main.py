@@ -197,8 +197,8 @@ def delivery_info():
 
         # Checks if input matches pattern and is not only 0's
         if re.match(pattern, no_blanks) and not re.fullmatch(r'0+', no_blanks):
-            # Stores response in dictionary in title class
-            customer_details["house"] = response.title()
+            # Stores response in dictionary in title class and strips leading 0's
+            customer_details["house"] = response.title().strip("0")
             break  # Exits loop
         # Prints error message for invalid input
         print("This is an invalid house number")
